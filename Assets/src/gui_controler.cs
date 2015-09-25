@@ -26,7 +26,7 @@ public class gui_controler : MonoBehaviour {
     public void showParts(int ports) {
         isVisible = true;
         for (int i = 0; i < partsGui.transform.childCount; i++) {
-            Destroy(partsGui.transform.GetChild(i));
+            Destroy(partsGui.transform.GetChild(i).gameObject);
         }
 
         GameObject[] parts = partManager.GetComponent<part_manager>().parts;
