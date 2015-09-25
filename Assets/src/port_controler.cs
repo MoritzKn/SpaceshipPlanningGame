@@ -17,18 +17,11 @@ public class port_controler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown("Fire1")) {
-			RaycastHit hitinfo;
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray,out hitinfo) && hitinfo.collider==coll ){
-				rend.material = mat_selected;
-				selected=true;
 
-			}
-			else{
-				rend.material = standard;
-				selected=false;
-			}
-		}
+	}
+
+	void OnMouseDown(){
+		rend.material = mat_selected;
+		selected=true;
 	}
 }
