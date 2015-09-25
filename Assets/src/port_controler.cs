@@ -6,13 +6,13 @@ public class port_controler : MonoBehaviour {
 	public Material mat_selected;
 	public Material standard;
 	public bool selected;
-	Renderer rend;
-	Collider coll;
+	public Renderer rend;
+	portGroup_controler parent;
 
 	// Use this for initialization
 	void Start () {
 		 rend = gameObject.GetComponent<Renderer>();
-		 coll = gameObject.GetComponent<Collider>();
+		 parent = transform.parent.GetComponent<portGroup_controler>();
 	}
 	
 	// Update is called once per frame
@@ -21,7 +21,6 @@ public class port_controler : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		rend.material = mat_selected;
-		selected=true;
+		parent.selectionHandler (gameObject);
 	}
 }
