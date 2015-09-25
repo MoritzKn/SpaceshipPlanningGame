@@ -14,10 +14,10 @@ public class gui_controler : MonoBehaviour {
     }
 
     void Update () {
-        if (isVisible && partsGui.GetComponent<RectTransform>().anchoredPosition.x < -220)
+        if (isVisible && partsGui.GetComponent<RectTransform>().anchoredPosition.x < 100)
         {
             partsGui.GetComponent<RectTransform>().anchoredPosition += new Vector2(260f * Time.deltaTime, 0f);
-        } else if (!isVisible && partsGui.GetComponent<RectTransform>().anchoredPosition.x > -420)
+        } else if (!isVisible && partsGui.GetComponent<RectTransform>().anchoredPosition.x > -120)
         {
             partsGui.GetComponent<RectTransform>().anchoredPosition -= new Vector2(260f * Time.deltaTime, 0f);
         }
