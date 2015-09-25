@@ -19,21 +19,50 @@ public class portGroup_controler : MonoBehaviour {
 
 	public void selectionHandler(GameObject caller){
 		port_controler caller_child = caller.GetComponent<port_controler> ();
-		for (int i=0; i< transform.childCount; i++) {
-			port_controler child=transform.GetChild(i).GetComponent<port_controler>();
+		if (!Input.GetKey (KeyCode.LeftControl) || caller_child.selectable) {
+			for (int i=0; i< transform.childCount; i++) {
 
-			if(child==caller_child){
-				child.selected=true;
-				child.rend.material=selected;
-			}
+				port_controler child = transform.GetChild (i).GetComponent<port_controler> ();
 
+				if (child == caller_child) {
+					child.selected = true;
+				}
 
-			if(!Input.GetKey(KeyCode.LeftControl)){
-				if(child!=caller_child){
-					child.selected=false;
-					child.rend.material=selectable;
+				if (!Input.GetKey (KeyCode.LeftControl)) {
+					if (child != caller_child) {
+						child.selected = false;
+					}
 				}
 			}
 		}
+
+		bool prev_selected;
+		bool next_selected;
+
+		for (int i=0; i< transform.childCount; i++) {
+			prev_selected=false;
+			next_selected=false;
+
+			if(i>0){
+				prev_selected=transform.GetChild(i-1).GetComponent<port_controler>().selected;
+			}
+			port_controler child=transform.GetChild(i).GetComponent<port_controler>();
+			if(i<transform.childCount-1){
+				next_selected=transform.GetChild(i+1).GetComponent<port_controler>().selected;
+			}
+
+			if(child.selected){
+				child.rend.material=selected;
+			}
+			else if(prev_selected || next_selected){
+				child.rend.material=selectable;
+				child.selectable=true;
+			}
+			else{
+				child.rend.material=standard;
+				child.selectable=false;
+			}
+		}
+
 	}
 }
