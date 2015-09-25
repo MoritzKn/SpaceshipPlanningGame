@@ -2,14 +2,13 @@
 using System.Collections;
 
 public class part_controler : MonoBehaviour {
+    [SerializeField] private string name;
+    [SerializeField] private int size = 1;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public string getName(){
+        return name;
+    }
+    public int getSize() {
+        return size;
+    }
 }
