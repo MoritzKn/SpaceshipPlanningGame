@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class port_controler : MonoBehaviour {
-
-	public Material mat_selected;
-	public Material standard;
+	
 	public bool selected;
 	public bool selectable;
 	public Renderer rend;
