@@ -15,14 +15,16 @@ public class part_controler : MonoBehaviour {
 
 	public void placePart(List<GameObject> ports){
         Vector3 newPos = new Vector3(0,0,0);
+        Quaternion newRot = new Quaternion();
         int count = 0;
         foreach (GameObject port in ports){
             count++;
             newPos += port.transform.position;
-            Debug.Log(newPos);
+            newRot = port.transform.rotation;
             Destroy(port);
 		}
         newPos /= count;
         transform.position = newPos;
+        transform.rotation = newRot;
 	}
 }
