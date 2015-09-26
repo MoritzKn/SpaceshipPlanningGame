@@ -7,8 +7,10 @@ public class portGroup_controler : MonoBehaviour {
 	private Material selected;
 	private Material selectable;
 
+	private ship_controler ship;
+
 	void Start(){
-		ship_controler ship=GameObject.FindGameObjectWithTag ("ship").GetComponent<ship_controler>();
+		ship=GameObject.FindGameObjectWithTag ("ship").GetComponent<ship_controler>();
 		standard = ship.mat_standard;
 		selected = ship.mat_selected;
 		selectable = ship.mat_selectable;
