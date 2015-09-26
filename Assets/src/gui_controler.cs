@@ -34,14 +34,17 @@ public class gui_controler : MonoBehaviour {
             int size = parts[i].GetComponent<part_controler>().getSize();
             if (size <= ports) {
                 GameObject newPartButton = Instantiate(partButton);
-                newPartButton.transform.parent = partsGui.transform;
+                newPartButton.transform.SetParent(partsGui.transform, true);
                 newPartButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-30 - (50*i));
-                string text = parts[i].GetComponent<part_controler>().getName();
+                GameObject partPrefab = parts[i];
+                string text = partPrefab.GetComponent<part_controler>().getName();
                 newPartButton.transform.GetChild(0).GetComponent<Text>().text = text;
+                newPartButton.GetComponent<partButton_controler>().usedPart = partPrefab;
+                newPartButton.GetComponent<partButton_controler>().init();
             }
         }
 
-    }   
+    }
 
     public void hideParts(int ports) {
         isVisible = false;
