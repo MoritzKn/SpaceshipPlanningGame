@@ -27,4 +27,14 @@ public class part_controler : MonoBehaviour {
         transform.position = newPos;
         transform.rotation = newRot;
 	}
+
+	public void groupSelectionHandler(GameObject caller){
+		portGroup_controler caller_child = caller.GetComponent<portGroup_controler>();
+		for(int i=0;i<transform.childCount;i++){
+			portGroup_controler child = transform.GetChild(i).GetComponent<portGroup_controler>();
+			if(caller_child != child){
+				child.resetGroup ();
+			}
+		}
+	}
 }
