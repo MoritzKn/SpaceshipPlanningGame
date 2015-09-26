@@ -21,8 +21,13 @@ public class flight : MonoBehaviour {
         }
         centerOfMass += gameObject.GetComponent<Renderer>().bounds.center * ((float) gameObject.GetComponent<ship_controler>().mass / entireMass);
 
-
         Debug.DrawLine(new Vector3(0,0,0), centerOfMass, Color.blue, 2f);
+
+        Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+        rb.centerOfMass = centerOfMass;
+        rb.mass = entireMass / 45;
+        
+        //foreach()
 	}
 	
 	// Update is called once per frame
