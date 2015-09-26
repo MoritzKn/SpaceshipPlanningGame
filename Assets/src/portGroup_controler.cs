@@ -7,9 +7,11 @@ public class portGroup_controler : MonoBehaviour {
 	public Material selected;
 	public Material selectable;
 
+	part_controler parent;
+
 	// Use this for initialization
 	void Start () {
-
+		parent=transform.parent.GetComponent<part_controler>();
 	}
 	
 	// Update is called once per frame
@@ -18,6 +20,7 @@ public class portGroup_controler : MonoBehaviour {
 	}
 
 	public void selectionHandler(GameObject caller){
+
 		port_controler caller_child = caller.GetComponent<port_controler> ();
 		if (!Input.GetKey (KeyCode.LeftControl) || caller_child.selectable) {
 			for (int i=0; i< transform.childCount; i++) {
@@ -39,37 +42,45 @@ public class portGroup_controler : MonoBehaviour {
 		bool prev_selected;
 		bool next_selected;
 
-        int selectionCount = 0;
+		int selectionCount = 0;
 		for (int i=0; i< transform.childCount; i++) {
-            prev_selected =false;
-			next_selected=false;
+			prev_selected = false;
+			next_selected = false;
 
-			if(i>0){
-				prev_selected=transform.GetChild(i-1).GetComponent<port_controler>().selected;
+			if (i > 0) {
+				prev_selected = transform.GetChild (i - 1).GetComponent<port_controler> ().selected;
 			}
-			port_controler child=transform.GetChild(i).GetComponent<port_controler>();
-			if(i<transform.childCount-1){
-				next_selected=transform.GetChild(i+1).GetComponent<port_controler>().selected;
+			port_controler child = transform.GetChild (i).GetComponent<port_controler> ();
+			if (i < transform.childCount - 1) {
+				next_selected = transform.GetChild (i + 1).GetComponent<port_controler> ().selected;
 			}
 
-			if(child.selected){
-				child.rend.material=selected;
-                selectionCount++;
-            }
-			else if(prev_selected || next_selected){
-				child.rend.material=selectable;
-				child.selectable=true;
-			}
-			else{
-				child.rend.material=standard;
-				child.selectable=false;
+			if (child.selected) {
+				child.rend.material = selected;
+				selectionCount++;
+			} else if (prev_selected || next_selected) {
+				child.rend.material = selectable;
+				child.selectable = true;
+			} else {
+				child.rend.material = standard;
+				child.selectable = false;
 			}
 		}
-        if (selectionCount > 0)
-        {
-            GameObject.Find("Canvas").GetComponent<gui_controler>().showParts(selectionCount);
-            selectionCount = 0;
-        }
+		if (selectionCount > 0) {
+			GameObject.Find ("Canvas").GetComponent<gui_controler> ().showParts (selectionCount);
+			selectionCount = 0;
+		}
+		if (!Input.GetKey (KeyCode.LeftControl) || caller_child.selectable) {
+			parent.groupSelectionHandler (gameObject);
+		}
+	}
 
+	public void resetGroup(){
+		for (int i=0; i< transform.childCount; i++) {
+			port_controler child=transform.GetChild(i).GetComponent<port_controler>();
+			child.selected=false;
+			child.selectable=false;
+			child.rend.material=standard;
+		}
 	}
 }
