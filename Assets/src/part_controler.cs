@@ -8,13 +8,13 @@ public class part_controler : MonoBehaviour {
 
 	[SerializeField] private Material mat_standard;
 	[SerializeField] private Material mat_selected;
-	private Renderer rend;
+	public Renderer rend;
 
 	private List<GameObject> assigned_ports;
-	private bool selected=false;
+	public bool selected=false;
 
 	void Start(){
-		rend = gameObject.GetComponent<Renderer>();
+		rend = gameObject.GetComponentInChildren<Renderer> ();
 	}
 
 	void Update(){
@@ -53,37 +53,22 @@ public class part_controler : MonoBehaviour {
         transform.rotation = newRot;
 	}
 
-	public void groupSelectionHandler(GameObject caller){
-
-		foreach(GameObject part in GameObject.FindGameObjectsWithTag ("part")){
-			selected=false;
-			rend.material = mat_standard;
-		}
-
-		portGroup_controler caller_child = caller.GetComponent<portGroup_controler>();
-		for(int i=0;i<transform.childCount;i++){
-			portGroup_controler child = transform.GetChild(i).GetComponent<portGroup_controler>();
-			if(caller_child != child){
-				child.resetGroup ();
-			}
-		}
-	}
-
 	void OnMouseDown(){
-		GameObject port_group_parent = assigned_ports [0].transform.parent.GetComponent<GameObject>();
-		for (int i=0; i<port_group_parent.transform.childCount; i++) {
-			port_group_parent.transform.GetChild(i).GetComponent<portGroup_controler>().resetGroup();
+
+		foreach (GameObject portGroup in GameObject.FindGameObjectsWithTag ("portGroup")) {
+			portGroup.GetComponent<portGroup_controler>().resetGroup();
 		}
+
 		rend.material = mat_selected;
 		selected = true;
 
 		foreach(GameObject part in GameObject.FindGameObjectsWithTag ("part")){
-			if(part != gameObject){
-				selected=false;
-				rend.material = mat_standard;
+			if(part!=gameObject){
+				part_controler part_ctrl=part.GetComponent<part_controler>();
+				part_ctrl.selected=false;
+				part_ctrl.rend.material = mat_standard;
 			}
 		}
-
 	}
 
 	public void remove(){

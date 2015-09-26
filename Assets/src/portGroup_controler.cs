@@ -7,18 +7,6 @@ public class portGroup_controler : MonoBehaviour {
 	public Material selected;
 	public Material selectable;
 
-	part_controler parent;
-
-	// Use this for initialization
-	void Start () {
-		parent=transform.parent.GetComponent<part_controler>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
-
 	public void selectionHandler(GameObject caller){
 
 		port_controler caller_child = caller.GetComponent<port_controler> ();
@@ -71,7 +59,7 @@ public class portGroup_controler : MonoBehaviour {
 			selectionCount = 0;
 		}
 		if (!Input.GetKey (KeyCode.LeftControl) || caller_child.selectable) {
-			parent.groupSelectionHandler (gameObject);
+			transform.parent.GetComponent<ship_controler>().groupSelectionHandler(gameObject);
 		}
 	}
 
