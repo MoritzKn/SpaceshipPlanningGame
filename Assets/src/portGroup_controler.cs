@@ -17,7 +17,9 @@ public class portGroup_controler : MonoBehaviour {
 	public void selectionHandler(GameObject caller){
 
 		port_controler caller_child = caller.GetComponent<port_controler> ();
+
 		if (!Input.GetKey (KeyCode.LeftControl) || caller_child.selectable) {
+
 			for (int i=0; i< transform.childCount; i++) {
 
 				port_controler child = transform.GetChild (i).GetComponent<port_controler> ();
@@ -66,7 +68,7 @@ public class portGroup_controler : MonoBehaviour {
 			selectionCount = 0;
 		}
 		if (!Input.GetKey (KeyCode.LeftControl) || caller_child.selectable) {
-			transform.parent.GetComponent<ship_controler>().groupSelectionHandler(gameObject);
+			ship.groupSelectionHandler(gameObject);
 		}
 	}
 
