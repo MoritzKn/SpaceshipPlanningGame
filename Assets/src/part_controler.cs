@@ -6,8 +6,9 @@ public class part_controler : MonoBehaviour {
     [SerializeField] private string name;
     [SerializeField] private int size = 1;
 
-	[SerializeField] private Material mat_standard;
-	[SerializeField] private Material mat_selected;
+	private Material mat_standard;
+	private Material mat_selected;
+
 	public Renderer rend;
 
 	private List<GameObject> assigned_ports;
@@ -15,6 +16,9 @@ public class part_controler : MonoBehaviour {
 
 	void Start(){
 		rend = gameObject.GetComponentInChildren<Renderer> ();
+		ship_controler ship=GameObject.FindGameObjectWithTag ("ship").GetComponent<ship_controler>();
+		mat_standard = ship.mat_standard;
+		mat_selected = ship.mat_selected;
 	}
 
 	void Update(){

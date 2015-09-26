@@ -3,7 +3,9 @@ using System.Collections;
 
 public class ship_controler : MonoBehaviour {
 
-	[SerializeField] private Material mat_standard;
+	public Material mat_standard;
+	public Material mat_selected;
+	public Material mat_selectable;
 
 	public void groupSelectionHandler(GameObject caller){
 		

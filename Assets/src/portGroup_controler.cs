@@ -3,9 +3,16 @@ using System.Collections;
 
 public class portGroup_controler : MonoBehaviour {
 
-	public Material standard;
-	public Material selected;
-	public Material selectable;
+	private Material standard;
+	private Material selected;
+	private Material selectable;
+
+	void Start(){
+		ship_controler ship=GameObject.FindGameObjectWithTag ("ship").GetComponent<ship_controler>();
+		standard = ship.mat_standard;
+		selected = ship.mat_selected;
+		selectable = ship.mat_selectable;
+	}
 
 	public void selectionHandler(GameObject caller){
 
