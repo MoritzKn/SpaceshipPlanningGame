@@ -63,15 +63,18 @@ public class part_controler : MonoBehaviour {
 			portGroup.GetComponent<portGroup_controler>().resetGroup();
 		}
 
+		foreach(GameObject part in GameObject.FindGameObjectsWithTag ("part")){
+			part_controler part_ctrl=part.GetComponent<part_controler>();
+			part_ctrl.selected=false;
+			part_ctrl.rend.material = mat_standard;
+		}
+
 		rend.material = mat_selected;
 		selected = true;
 
-		foreach(GameObject part in GameObject.FindGameObjectsWithTag ("part")){
-			if(part!=gameObject){
-				part_controler part_ctrl=part.GetComponent<part_controler>();
-				part_ctrl.selected=false;
-				part_ctrl.rend.material = mat_standard;
-			}
+		foreach (part_controler child in GetComponentsInChildren <part_controler>()) {
+			child.selected = true;
+			child.rend.material = mat_selected;
 		}
 	}
 
