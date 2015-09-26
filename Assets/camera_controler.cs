@@ -5,7 +5,7 @@ public class camera_controler : MonoBehaviour {
     float pos = 7;
 
     void Update () {
-        if (pos < 8 && Input.GetAxis("Vertical") > 0
+        if (pos < 12 && Input.GetAxis("Vertical") > 0
             || pos > 2 && Input.GetAxis("Vertical") < 0)
         {
             pos += Input.GetAxis("Vertical") * 12 * Time.deltaTime;
