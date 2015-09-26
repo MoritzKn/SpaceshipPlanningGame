@@ -39,8 +39,8 @@ public class portGroup_controler : MonoBehaviour {
 		bool prev_selected;
 		bool next_selected;
 
+        int selectionCount = 0;
 		for (int i=0; i< transform.childCount; i++) {
-            int selectionCount = 0;
             prev_selected =false;
 			next_selected=false;
 
@@ -64,12 +64,12 @@ public class portGroup_controler : MonoBehaviour {
 				child.rend.material=standard;
 				child.selectable=false;
 			}
-            if (selectionCount > 0)
-            {
-                GameObject.Find("Canvas").GetComponent<gui_controler>().showParts(selectionCount);
-                selectionCount = 0;
-            }
 		}
+        if (selectionCount > 0)
+        {
+            GameObject.Find("Canvas").GetComponent<gui_controler>().showParts(selectionCount);
+            selectionCount = 0;
+        }
 
 	}
 }

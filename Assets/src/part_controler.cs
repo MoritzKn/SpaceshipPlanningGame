@@ -14,10 +14,15 @@ public class part_controler : MonoBehaviour {
     }
 
 	public void placePart(List<GameObject> ports){
-		Instantiate (gameObject);
-		transform.localToWorldMatrix = ports [0].transform.localToWorldMatrix;
-		foreach(GameObject port in ports){
-			Destroy (port);
+        Vector3 newPos = new Vector3(0,0,0);
+        int count = 0;
+        foreach (GameObject port in ports){
+            count++;
+            newPos += port.transform.position;
+            Debug.Log(newPos);
+            Destroy(port);
 		}
+        newPos /= count;
+        transform.position = newPos;
 	}
 }

@@ -24,5 +24,6 @@ public class partButton_controler : MonoBehaviour {
             }
         }
         newPart.GetComponent<part_controler>().placePart(selectedPorts);
+        GameObject.Find("Canvas").GetComponent<gui_controler>().hideParts();
     }
 }
