@@ -17,10 +17,10 @@ public class gui_controler : MonoBehaviour {
     void Update () {
         if (isVisible && partsGui.GetComponent<RectTransform>().anchoredPosition.x < 100)
         {
-            partsGui.GetComponent<RectTransform>().anchoredPosition += new Vector2(260f * Time.deltaTime, 0f);
+            partsGui.GetComponent<RectTransform>().anchoredPosition += new Vector2(460f * Time.deltaTime, 0f);
         } else if (!isVisible && partsGui.GetComponent<RectTransform>().anchoredPosition.x > -120)
         {
-            partsGui.GetComponent<RectTransform>().anchoredPosition -= new Vector2(260f * Time.deltaTime, 0f);
+            partsGui.GetComponent<RectTransform>().anchoredPosition -= new Vector2(460f * Time.deltaTime, 0f);
         }
     }
 
@@ -35,17 +35,19 @@ public class gui_controler : MonoBehaviour {
         newPartText.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-20,0);
 
         GameObject[] parts = partManager.GetComponent<part_manager>().parts;
+        int activeParts = 0;
         for (int i = 0; i < parts.Length; i++) {
             int size = parts[i].GetComponent<part_controler>().getSize();
             if (size == ports) {
                 GameObject newPartButton = Instantiate(partButton);
                 newPartButton.transform.SetParent(partsGui.transform, true);
-                newPartButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-60 - (50*i));
+                newPartButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-60 - (50* activeParts));
                 GameObject partPrefab = parts[i];
                 string text = partPrefab.GetComponent<part_controler>().getName();
                 newPartButton.transform.GetChild(0).GetComponent<Text>().text = text;
                 newPartButton.GetComponent<partButton_controler>().usedPart = partPrefab;
                 newPartButton.GetComponent<partButton_controler>().init();
+                activeParts++;
             }
         }
 
