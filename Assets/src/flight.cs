@@ -27,7 +27,9 @@ public class flight : MonoBehaviour {
         rb.centerOfMass = centerOfMass;
         rb.mass = entireMass / 45;
         
-        //foreach()
+		foreach(engine_controler engine in GetComponentsInChildren<engine_controler>()){
+			engine.applyForce(rb);
+		}
 	}
 	
 	// Update is called once per frame
