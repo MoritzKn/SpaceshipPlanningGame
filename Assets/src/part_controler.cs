@@ -14,10 +14,16 @@ public class part_controler : MonoBehaviour {
     }
 
 	public void placePart(List<GameObject> ports){
+
         Vector3 newPos = new Vector3(0,0,0);
         Quaternion newRot = new Quaternion();
         int count = 0;
         foreach (GameObject port in ports){
+
+			if(count==0){
+				port.transform.parent.GetComponent<portGroup_controler>().resetGroup();
+			}
+
             count++;
             newPos += port.transform.position;
             newRot = port.transform.rotation;
