@@ -13,11 +13,6 @@ public class port_controler : MonoBehaviour {
 		 rend = gameObject.GetComponent<Renderer>();
 		 parent = transform.parent.GetComponent<portGroup_controler>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 
 	void OnMouseDown(){
 		parent.selectionHandler (gameObject);

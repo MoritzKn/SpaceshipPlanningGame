@@ -6,6 +6,7 @@ public class ship_controler : MonoBehaviour {
 	public Material mat_standard;
 	public Material mat_selected;
 	public Material mat_selectable;
+    public int mass;
 
 	public void groupSelectionHandler(GameObject caller){
 		

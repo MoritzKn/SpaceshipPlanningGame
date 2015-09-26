@@ -5,8 +5,9 @@ using System.Collections.Generic;
 public class part_controler : MonoBehaviour {
     [SerializeField] private string name;
     [SerializeField] private int size = 1;
+    public int mass;
 
-	private Material mat_standard;
+    private Material mat_standard;
 	private Material mat_selected;
 
 	public Renderer rend;
