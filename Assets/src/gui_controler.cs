@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class gui_controler : MonoBehaviour {
-    public GameObject partManager;
     public GameObject partButton;
     public GameObject partText;
 
@@ -33,8 +32,8 @@ public class gui_controler : MonoBehaviour {
         newPartText.transform.SetParent(partsGui.transform, true);
         newPartText.GetComponent<Text>().text = "Parts for " + ports + " Ports";
         newPartText.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-20,0);
-
-        GameObject[] parts = partManager.GetComponent<part_manager>().parts;
+        GameObject partManager = GameObject.FindGameObjectWithTag("partManager");
+        GameObject[] parts = partManager.GetComponent<part_manager>().parts.ToArray();
         int activeParts = 0;
         for (int i = 0; i < parts.Length; i++) {
             int size = parts[i].GetComponent<part_controler>().getSize();
@@ -66,5 +65,10 @@ public class gui_controler : MonoBehaviour {
     public void abortFromLaunchpad()
     {
         GameObject.FindGameObjectWithTag("ship").GetComponent<flight>().StoppFlight();
+    }
+
+    public void Success()
+    {
+        GameObject.FindGameObjectWithTag("ship").GetComponent<flight>().newFlight();
     }
 }

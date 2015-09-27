@@ -4,8 +4,11 @@ using System.Collections;
 public class pad_controler : MonoBehaviour {
     float rot;
     public GameObject shipBody;
+    public GameObject partManager;
     public bool isTested=false;
+    public bool isPartManager=false;
 	public bool destroy=false;
+
 
     void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
@@ -16,8 +19,24 @@ public class pad_controler : MonoBehaviour {
 			if (pad.GetComponent<pad_controler>().destroy) {
 				destroy = true;
 			}
-		}
-		
+            if (pad.GetComponent<pad_controler>().isPartManager)
+            {
+                isPartManager = true;
+                print("partmanager");
+            }
+
+        }
+
+        if (GameObject.FindGameObjectsWithTag("partManager").Length >= 1) {
+            isPartManager = true;
+        }
+
+        if (!isPartManager) {
+            print("spawned");
+            Instantiate(partManager);
+            isPartManager = true;
+        }
+
 		if (!isTested)
         {
             GameObject newShipBody = Instantiate(shipBody);

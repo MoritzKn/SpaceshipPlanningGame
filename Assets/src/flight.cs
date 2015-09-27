@@ -76,12 +76,26 @@ public class flight : MonoBehaviour {
         flytime = 0;
         clone.SetActive(true);
         clone.GetComponent<pad_controler>().destroy = true;
+        clone.GetComponent<pad_controler>().isPartManager = true;
         Application.LoadLevel("editor");
         Destroy(gameObject.transform.parent.gameObject);
     }
 
-// Update is called once per frame
-void Update () {
+    public void newFlight()
+    {
+        isFlying = false;
+        isStarting = false;
+        flytime = 0;
+        clone.SetActive(true);
+        clone.GetComponent<pad_controler>().destroy = false;
+        clone.GetComponent<pad_controler>().isTested = false;
+        Application.LoadLevel("andersUndSchlimmer");
+        Destroy(gameObject.transform.parent.gameObject);
+        Destroy(clone);
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (isCrashed) {
             flytime += Time.deltaTime;
             if (flytime > 5)
@@ -95,6 +109,15 @@ void Update () {
             {
                 float hight = hit.distance * 3;
                 GameObject.Find("hightCount").GetComponent<Text>().text = Mathf.Round(hight).ToString() + " m";
+                if (hight > 1200) {
+                    GameObject.Find("Success").GetComponent<Image>().enabled = true;
+                    GameObject.Find("Success").GetComponentsInChildren<Text>()[0].enabled = true;
+                    GameObject.Find("Success").GetComponentsInChildren<Text>()[1].enabled = true;
+                    GameObject.Find("Success").GetComponentsInChildren<Text>()[2].enabled = true;
+                    GameObject.Find("Success").GetComponentInChildren<Button>().enabled = true;
+                    GameObject.Find("Success").GetComponentsInChildren<Image>()[0].enabled = true;
+                    GameObject.Find("Success").GetComponentsInChildren<Image>()[1].enabled = true;
+                }
             }
             if (GameObject.Find("countdown"))
                 GameObject.Find("countdown").GetComponent<Text>().text = (flytime + 0.0001).ToString();
