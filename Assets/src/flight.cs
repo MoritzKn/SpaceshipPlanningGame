@@ -2,9 +2,11 @@
 using System.Collections;
 
 public class flight : MonoBehaviour {
+    bool isFlying = false;
 
     // Use this for initialization
     void startFlight() {
+        isFlying = true;
         //Detect center of mass
         Vector3 centerOfMass = new Vector3(0,0,0);
         int entireMass = 0;
@@ -21,11 +23,12 @@ public class flight : MonoBehaviour {
         }
         centerOfMass += gameObject.GetComponent<Renderer>().bounds.center * ((float) gameObject.GetComponent<ship_controler>().mass / entireMass);
 
-        Debug.DrawLine(new Vector3(0,0,0), centerOfMass, Color.blue, 2f);
 
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();
-        rb.centerOfMass = centerOfMass;
-        rb.mass = entireMass / 45;
+        rb.centerOfMass = (rb.centerOfMass*14 + centerOfMass - transform.position)/15;
+        rb.mass = entireMass / 20f;
+        rb.angularDrag = 30;
+        rb.drag = 1;
         
 		foreach(engine_controler engine in GetComponentsInChildren<engine_controler>()){
 			engine.applyForce(rb);
@@ -34,7 +37,7 @@ public class flight : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.Backspace)) {
+        if (Input.GetKey(KeyCode.Backspace) && !isFlying) {
             startFlight();
         }
 	}

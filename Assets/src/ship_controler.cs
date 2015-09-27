@@ -11,7 +11,7 @@ public class ship_controler : MonoBehaviour {
 	public void groupSelectionHandler(GameObject caller){
 		
 		foreach(GameObject part in GameObject.FindGameObjectsWithTag ("part")){
-			part_controler part_ctrl=part.GetComponent<part_controler>();
+            part_controler part_ctrl=part.GetComponent<part_controler>();
 			part_ctrl.selected=false;
 			part_ctrl.rend.material = mat_standard;
 		}
