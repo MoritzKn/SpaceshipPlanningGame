@@ -8,6 +8,7 @@ public class flight : MonoBehaviour {
     public bool isCrashed = false;
     
     public GameObject explosion;
+	public float maxHeight=0;
 
     float flytime=-4;
 
@@ -21,6 +22,8 @@ public class flight : MonoBehaviour {
     public void startFlight() {
         centerOfMass = new Vector3(0, 0, 0);
         entireMass = 0;
+
+
 
 
         Application.LoadLevel ("start");
@@ -67,7 +70,9 @@ public class flight : MonoBehaviour {
         
 		foreach(engine_controler engine in GetComponentsInChildren<engine_controler>()){
 			engine.applyForce(rb);
+			gameObject.GetComponent<AudioSource>().Play();
 		}
+
     }
 
     public void StoppFlight() {
@@ -108,6 +113,7 @@ public class flight : MonoBehaviour {
             if (Physics.Raycast(downRay, out hit))
             {
                 float hight = hit.distance * 3;
+				maxHeight=Mathf.Max(maxHeight,hight);
                 GameObject.Find("hightCount").GetComponent<Text>().text = Mathf.Round(hight).ToString() + " m";
                 if (hight > 1200) {
                     GameObject.Find("Success").GetComponent<Image>().enabled = true;
