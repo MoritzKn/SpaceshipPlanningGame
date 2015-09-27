@@ -5,8 +5,11 @@ using System.Collections;
 public class flight : MonoBehaviour {
     public bool isFlying = false;
     public bool isStarting = false;
+    public bool isCrashed = false;
+    
+    public GameObject explosion;
 
-	float flytime=-4;
+    float flytime=-4;
 
 	GameObject clone;
 
@@ -30,7 +33,7 @@ public class flight : MonoBehaviour {
 
 		transform.parent.GetComponent<Renderer> ().enabled = false;
 
-        transform.position += new Vector3(0,3,0);
+        transform.position += new Vector3(0f, 2.6f, 0f);
         transform.localEulerAngles = new Vector3(270, 270, 0);
 
 
@@ -57,9 +60,9 @@ public class flight : MonoBehaviour {
 
    void startPhysics() {
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();
-        rb.centerOfMass = (rb.centerOfMass*14 + centerOfMass - transform.position)/15;
-        rb.mass = entireMass / 20f;
-        rb.angularDrag = 22 + stabilization;
+        rb.centerOfMass = (rb.centerOfMass*9 + centerOfMass - transform.position)/10;
+        rb.mass = entireMass / 32f;
+        rb.angularDrag = 20 + stabilization;
         rb.drag = 4;
         
 		foreach(engine_controler engine in GetComponentsInChildren<engine_controler>()){
@@ -67,25 +70,29 @@ public class flight : MonoBehaviour {
 		}
     }
 
-    void StoppFlight() {
-        Application.LoadLevel("editor");
+    public void StoppFlight() {
         isFlying = false;
         isStarting = false;
         flytime = 0;
         clone.SetActive(true);
         clone.GetComponent<pad_controler>().destroy = true;
+        Application.LoadLevel("editor");
         Destroy(gameObject.transform.parent.gameObject);
     }
 
 // Update is called once per frame
 void Update () {
-        if (isStarting) {
+        if (isCrashed) {
+            flytime += Time.deltaTime;
+            if (flytime > 5)
+                StoppFlight();
+        }
+        else if (isStarting || isFlying) {
 			flytime+=Time.deltaTime;
             RaycastHit hit;
             Ray downRay = new Ray(new Vector3(transform.position.x, transform.position.y-8, transform.position.z), -Vector3.up);
             if (Physics.Raycast(downRay, out hit))
             {
-                Debug.Log(hit.distance);
                 float hight = hit.distance * 3;
                 GameObject.Find("hightCount").GetComponent<Text>().text = Mathf.Round(hight).ToString() + " m";
             }
@@ -93,7 +100,7 @@ void Update () {
                 GameObject.Find("countdown").GetComponent<Text>().text = (flytime + 0.0001).ToString();
 		}
 
-		if(flytime > 0 && !isFlying)
+		if (flytime > 0 && !isFlying)
         {
             startPhysics();
             isFlying = true;
@@ -101,6 +108,15 @@ void Update () {
             GameObject.Find("countdown").GetComponent<Text>().enabled = false;
             GameObject.Find("hightCount").transform.parent.GetComponent<Image>().enabled = true;
             GameObject.Find("hightCount").GetComponent<Text>().enabled = true;
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (isFlying && !isCrashed) {
+            Instantiate(explosion).transform.position = transform.position;
+            flytime = 0;
+            isCrashed = true;
         }
     }
 }

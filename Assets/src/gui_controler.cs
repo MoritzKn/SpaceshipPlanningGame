@@ -15,10 +15,10 @@ public class gui_controler : MonoBehaviour {
     }
 
     void Update () {
-        if (isVisible && partsGui.GetComponent<RectTransform>().anchoredPosition.x < 100)
+        if (partsGui && isVisible && partsGui.GetComponent<RectTransform>().anchoredPosition.x < 100)
         {
             partsGui.GetComponent<RectTransform>().anchoredPosition += new Vector2(460f * Time.deltaTime, 0f);
-        } else if (!isVisible && partsGui.GetComponent<RectTransform>().anchoredPosition.x > -120)
+        } else if (partsGui && !isVisible && partsGui.GetComponent<RectTransform>().anchoredPosition.x > -120)
         {
             partsGui.GetComponent<RectTransform>().anchoredPosition -= new Vector2(460f * Time.deltaTime, 0f);
         }
@@ -61,5 +61,10 @@ public class gui_controler : MonoBehaviour {
         foreach (GameObject pad in GameObject.FindGameObjectsWithTag("pad")) {
             pad.GetComponentInChildren<flight>().startFlight();
         }
+    }
+
+    public void abortFromLaunchpad()
+    {
+        GameObject.FindGameObjectWithTag("ship").GetComponent<flight>().StoppFlight();
     }
 }
