@@ -33,7 +33,7 @@ public class flight : MonoBehaviour {
 
 		transform.parent.GetComponent<Renderer> ().enabled = false;
 
-        transform.position += new Vector3(0f, 2.6f, 0f);
+        transform.position += new Vector3(0f, 3.4f, 0f);
         transform.localEulerAngles = new Vector3(270, 270, 0);
 
 
@@ -115,6 +115,9 @@ void Update () {
     {
         if (isFlying && !isCrashed) {
             Instantiate(explosion).transform.position = transform.position;
+            foreach (GameObject part in GameObject.FindGameObjectsWithTag("part")) {
+                Rigidbody rb = part.AddComponent<Rigidbody>();
+            }
             flytime = 0;
             isCrashed = true;
         }
