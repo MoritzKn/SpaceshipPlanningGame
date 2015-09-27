@@ -18,7 +18,7 @@ public class camera_controler : MonoBehaviour {
                 transform.position.z
             );
 
-            transform.LookAt(GameObject.Find("shipBody").transform);
+            transform.LookAt(GameObject.FindGameObjectWithTag("pad").GetComponentInChildren<ship_controler>().transform);
         }
     }
 }
