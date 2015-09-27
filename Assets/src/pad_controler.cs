@@ -20,7 +20,6 @@ public class pad_controler : MonoBehaviour {
 		
 		if (!isTested)
         {
-			print ("created");
             GameObject newShipBody = Instantiate(shipBody);
             newShipBody.transform.SetParent(transform);
             newShipBody.transform.localPosition = new Vector3(0, 0, 20);
@@ -34,12 +33,14 @@ public class pad_controler : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        rot += Input.GetAxis("Horizontal") * 45 * Time.deltaTime; ;
-        transform.eulerAngles = new Vector3(
-            transform.eulerAngles.x,
-            rot,
-            transform.eulerAngles.z
-        );
+        if (!GetComponentInChildren<flight>().isFlying) {
+            rot += Input.GetAxis("Horizontal") * 45 * Time.deltaTime; ;
+            transform.eulerAngles = new Vector3(
+                transform.eulerAngles.x,
+                rot,
+                transform.eulerAngles.z
+            );
+        }
     }
 
     public void turnRight() {

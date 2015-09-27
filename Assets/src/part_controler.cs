@@ -12,7 +12,7 @@ public class part_controler : MonoBehaviour {
 
 	public Renderer rend;
 
-	private List<GameObject> assigned_ports;
+	public List<GameObject> assigned_ports;
 	public bool selected=false;
 
 	void Start(){
