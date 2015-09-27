@@ -13,12 +13,10 @@ public class flight : MonoBehaviour {
 
 		Application.LoadLevel ("start");
 
-		//clone=Instantiate (gameObject);
+		clone = Instantiate (transform.parent.gameObject);
+		clone.SetActive (false);
 
-		//gameObject.SetActive (false);
-		//clone.GetComponent<Renderer>().enabled = false;
-
-		//print ("original");
+		transform.parent.GetComponent<Renderer> ().enabled = false;
 
         isFlying = true;
         //Detect center of mass
@@ -61,10 +59,11 @@ public class flight : MonoBehaviour {
 		}
 
 		if(flytime>10){
-			//Destroy (clone);
 			Application.LoadLevel ("editor");
 			isFlying=false;
 			flytime=0;
+			clone.SetActive(true);
+			Destroy (gameObject);
 		}
 	}
 }
