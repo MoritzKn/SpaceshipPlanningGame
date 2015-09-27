@@ -4,29 +4,30 @@ using System.Collections;
 public class pad_controler : MonoBehaviour {
     float rot;
     public GameObject shipBody;
-    public bool isTested;
+    public bool isTested=false;
+	public bool destroy=false;
 
     void Awake(){
-        Debug.Log("awakle");
 		DontDestroyOnLoad (transform.gameObject);
         foreach (GameObject pad in GameObject.FindGameObjectsWithTag("pad")) {
-            Debug.Log("pad");
             if (pad.GetComponent<pad_controler>().isTested) {
-                Debug.Log("tested");
                 isTested = true;
             }
-        }
-
-        if (!isTested)
+			if (pad.GetComponent<pad_controler>().destroy) {
+				destroy = true;
+			}
+		}
+		
+		if (!isTested)
         {
+			print ("created");
             GameObject newShipBody = Instantiate(shipBody);
             newShipBody.transform.SetParent(transform);
             newShipBody.transform.localPosition = new Vector3(0, 0, 20);
             newShipBody.transform.localEulerAngles = new Vector3(0, 270, 0);
             newShipBody.transform.localScale = new Vector3(3.3f, 3.3f, 3.3f);
         }
-        else {
-            Debug.Log("destroy");
+        else if(destroy){
             Destroy(gameObject);
         }
 	}

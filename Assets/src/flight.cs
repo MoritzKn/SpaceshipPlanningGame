@@ -12,7 +12,9 @@ public class flight : MonoBehaviour {
     public void startFlight() {
 
 		Application.LoadLevel ("start");
-        gameObject.GetComponentInParent<pad_controler>().isTested = true;
+        
+		gameObject.GetComponentInParent<pad_controler>().isTested = true;
+		gameObject.GetComponentInParent<pad_controler>().destroy = false;
 
 		clone = Instantiate (transform.parent.gameObject);
 		clone.SetActive (false);
@@ -58,12 +60,13 @@ public class flight : MonoBehaviour {
 			flytime+=Time.deltaTime;
 		}
 
-		if(flytime>10){
+		if(flytime>5){
 			Application.LoadLevel ("editor");
 			isFlying=false;
 			flytime=0;
 			clone.SetActive(true);
-			Destroy (gameObject);
+			clone.GetComponent<pad_controler>().destroy=true;
+			Destroy (gameObject.transform.parent.gameObject);
 		}
 	}
 }
