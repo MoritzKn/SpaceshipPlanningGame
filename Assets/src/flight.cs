@@ -12,6 +12,7 @@ public class flight : MonoBehaviour {
     void startFlight() {
 
 		Application.LoadLevel ("start");
+        gameObject.GetComponentInParent<pad_controler>().isTested = true;
 
 		clone = Instantiate (transform.parent.gameObject);
 		clone.SetActive (false);
