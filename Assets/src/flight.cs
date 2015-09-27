@@ -4,8 +4,13 @@ using System.Collections;
 public class flight : MonoBehaviour {
     bool isFlying = false;
 
+	float flytime=0;
+
     // Use this for initialization
     void startFlight() {
+
+		Application.LoadLevel ("start");
+
         isFlying = true;
         //Detect center of mass
         Vector3 centerOfMass = new Vector3(0,0,0);
@@ -37,8 +42,19 @@ public class flight : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.Backspace) && !isFlying) {
+        if (Input.GetKeyDown(KeyCode.Backspace) && !isFlying) {
             startFlight();
         }
+
+		if (isFlying) {
+			flytime+=Time.deltaTime;
+			print (flytime);
+		}
+
+		if(flytime>10){
+			Application.LoadLevel ("editor");
+			isFlying=false;
+			flytime=0;
+		}
 	}
 }

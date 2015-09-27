@@ -4,6 +4,10 @@ using System.Collections;
 public class pad_controler : MonoBehaviour {
     float rot;
 
+	void Awake(){
+		DontDestroyOnLoad (transform.gameObject);
+	}
+
 	// Update is called once per frame
 	void Update () {
         rot += Input.GetAxis("Horizontal") * 45 * Time.deltaTime; ;
