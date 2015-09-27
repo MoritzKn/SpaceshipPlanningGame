@@ -56,4 +56,10 @@ public class gui_controler : MonoBehaviour {
     public void hideParts() {
         isVisible = false;
     }
+
+    public void testShip() {
+        foreach (GameObject pad in GameObject.FindGameObjectsWithTag("pad")) {
+            pad.GetComponentInChildren<flight>().startFlight();
+        }
+    }
 }

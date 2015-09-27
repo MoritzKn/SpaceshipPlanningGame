@@ -9,7 +9,7 @@ public class flight : MonoBehaviour {
 	GameObject clone;
 
     // Use this for initialization
-    void startFlight() {
+    public void startFlight() {
 
 		Application.LoadLevel ("start");
         gameObject.GetComponentInParent<pad_controler>().isTested = true;
