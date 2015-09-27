@@ -55,7 +55,6 @@ public class flight : MonoBehaviour {
 
 		if (isFlying) {
 			flytime+=Time.deltaTime;
-			print (flytime);
 		}
 
 		if(flytime>10){
