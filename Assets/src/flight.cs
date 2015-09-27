@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class flight : MonoBehaviour {
     public bool isFlying = false;
     public bool isStarting = false;
 
-	float flytime=0;
+	float flytime=-4;
 
 	GameObject clone;
 
+    int stabilization = 0;
     Vector3 centerOfMass;
     int entireMass;
 
@@ -31,8 +33,11 @@ public class flight : MonoBehaviour {
         transform.position += new Vector3(0,3,0);
         transform.localEulerAngles = new Vector3(270, 270, 0);
 
-        foreach (part_controler partCon in GetComponentsInChildren<part_controler>())
+
+        foreach (part_controler partCon in GetComponentsInChildren<part_controler>()) {
+            stabilization += partCon.stabilization;
             Destroy(partCon);
+        }
 
         isStarting = true;
         //Detect center of mass
@@ -54,8 +59,8 @@ public class flight : MonoBehaviour {
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();
         rb.centerOfMass = (rb.centerOfMass*14 + centerOfMass - transform.position)/15;
         rb.mass = entireMass / 20f;
-        rb.angularDrag = 30;
-        rb.drag = 3;
+        rb.angularDrag = 22 + stabilization;
+        rb.drag = 4;
         
 		foreach(engine_controler engine in GetComponentsInChildren<engine_controler>()){
 			engine.applyForce(rb);
@@ -76,12 +81,26 @@ public class flight : MonoBehaviour {
 void Update () {
         if (isStarting) {
 			flytime+=Time.deltaTime;
+            RaycastHit hit;
+            Ray downRay = new Ray(new Vector3(transform.position.x, transform.position.y-8, transform.position.z), -Vector3.up);
+            if (Physics.Raycast(downRay, out hit))
+            {
+                Debug.Log(hit.distance);
+                float hight = hit.distance * 3;
+                GameObject.Find("hightCount").GetComponent<Text>().text = Mathf.Round(hight).ToString() + " m";
+            }
+            if (GameObject.Find("countdown"))
+                GameObject.Find("countdown").GetComponent<Text>().text = (flytime + 0.0001).ToString();
 		}
 
-		if(flytime>4 && !isFlying)
+		if(flytime > 0 && !isFlying)
         {
             startPhysics();
             isFlying = true;
+            GameObject.Find("countdown").transform.parent.GetComponent<Image>().enabled = false;
+            GameObject.Find("countdown").GetComponent<Text>().enabled = false;
+            GameObject.Find("hightCount").transform.parent.GetComponent<Image>().enabled = true;
+            GameObject.Find("hightCount").GetComponent<Text>().enabled = true;
         }
     }
 }
